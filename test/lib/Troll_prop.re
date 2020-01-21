@@ -34,7 +34,7 @@ describe("Troll Inverse", ({test}) => {
   test("oops_he_survived should always be inverse of i_got_one", ({expect}) => {
     QCheck.Test.make(
           ~count=1000,
-          ~name="",
+          ~name="Kill an elf and elf finally survived never changed the scoring",
           troll_elf_arbitrary,
           ((troll,elf)) => i_got_one(elf,troll) |> oops_he_survived(elf) |> scoring == scoring(troll)
         )
@@ -47,7 +47,15 @@ describe("Troll Inverse", ({test}) => {
 describe("Troll Analogy", ({test}) => {
   test("i_got_one and i_got should be consistent", ({expect}) => {
     /* Test go there */
-    ()
+    QCheck.Test.make(
+              ~count=1000,
+              ~name="",
+              troll_elf_int_arbitrary,
+              ((troll,elf, qty)) => (List.init(qty, _ => 1) |> List.fold_left((cur_troll, _ ) => i_got_one(elf, cur_troll), troll)  |> scoring) == (i_got(qty, elf, troll) |> scoring)
+            )
+            |> expect.ext.qCheckTest;
+            ();
+        ()
   })
 });
 
