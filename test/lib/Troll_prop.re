@@ -18,14 +18,28 @@ describe("Troll Invariance", ({test}) => {
     ();
   });
   test("Troll score should always be >= 0", ({expect}) => {
-    /* Test go there */
+    QCheck.Test.make(
+          ~count=1000,
+          ~name="Troll score should always be >= 0",
+          troll_arbitrary,
+          troll => scoring(troll) >= 0
+        )
+        |> expect.ext.qCheckTest;
+        ();
     ()
   });
 });
 
 describe("Troll Inverse", ({test}) => {
   test("oops_he_survived should always be inverse of i_got_one", ({expect}) => {
-    /* Test go there */
+    QCheck.Test.make(
+          ~count=1000,
+          ~name="",
+          troll_elf_arbitrary,
+          ((troll,elf)) => i_got_one(elf,troll) |> oops_he_survived(elf) |> scoring == scoring(troll)
+        )
+        |> expect.ext.qCheckTest;
+        ();
     ()
   })
 });
