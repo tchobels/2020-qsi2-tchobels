@@ -102,7 +102,7 @@ describe("Troll Injection", ({test}) => {
         troll_two_elves_arbitrary,
         ((troll, elf1, elf2)) => {
            let kill1 = i_got_one(elf1, troll);
-           let kill2 = i_got_one(elf2, troll_kill_1);
+           let kill2 = i_got_one(elf2, kill1);
             scoring(kill1) < scoring(kill2);
         }
       ) |> expect.ext.qCheckTest;

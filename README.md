@@ -126,7 +126,7 @@ Cette fois c’est décidé le tournoi de chasse à l’elfe est lancé !
 À la fin de chaque bataille, les trolls veulent comparer les nombres et attributs de ces elfes dégoutants.
 avec **TOF** ça devrait être facile ⋯ ça devrait.
 
-## Excercices
+## Exercices
 
 ### Work with legacy code
 
