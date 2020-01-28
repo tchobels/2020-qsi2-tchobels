@@ -59,11 +59,53 @@ describe("Troll Analogy", ({test}) => {
   })
 });
 
-describe("Troll Idempotence", ({test}) => {
+describe("Troll Indempotence", ({test}) => {
   test(
     "all_elves_of_a_kind_resurrected brings the Troll killing list to a stable state",
     ({expect}) => {
-    /* Test go there */
-    ()
+        QCheck.Test.make(
+            ~count=1000,
+            ~name="all_elves_of_a_kind_resurrected brings the Troll killing list to a stable state",
+            troll_arbitrary,
+            troll => {
+            let stableTroll = all_elves_resurrected(troll);
+                scoring(stableTroll) == 0;
+            }
+        ) |> expect.ext.qCheckTest;
+      ();
+  })
+});
+
+describe("Troll Metamorphism", ({test}) => {
+  test(
+    "i_got_one increase the Troll killing list",
+    ({expect}) => {
+      QCheck.Test.make(
+        ~count=1000,
+        ~name="i_got_one increase the Troll killing list",
+        troll_elf_arbitrary,
+        ((troll, elf)) => {
+            scoring(troll) < scoring(i_got_one(elf, troll));
+        }
+      ) |> expect.ext.qCheckTest;
+      ();
+  })
+});
+
+describe("Troll Injection", ({test}) => {
+  test(
+    "i_got_one increase the Troll killing list differently",
+    ({expect}) => {
+      QCheck.Test.make(
+        ~count=1000,
+        ~name="i_got_one increase the Troll killing list",
+        troll_two_elves_arbitrary,
+        ((troll, elf1, elf2)) => {
+           let kill1 = i_got_one(elf1, troll);
+           let kill2 = i_got_one(elf2, troll_kill_1);
+            scoring(kill1) < scoring(kill2);
+        }
+      ) |> expect.ext.qCheckTest;
+      ();
   })
 });
